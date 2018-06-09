@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".main.Login"
+    android:id="@+id/rootLayout_login"
+    android:weightSum="100"
+    android:orientation="vertical"
+    android:padding="12dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="40"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:id="@+id/rootLayout_image">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/user" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="5">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/textInputLayout_userIdWrapper"
+            app:errorEnabled="false"
+            app:errorTextAppearance="@style/textInputLayoutErrorAppearance">
+        <android.support.design.widget.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:hint="User ID"
+            android:id="@+id/textInputEditText_userId"
+            android:textColorHint="@color/colorPrimaryDark"
+            android:textColor="@color/colorPrimaryDark"
+            android:backgroundTint="@color/colorAccent"
+            android:drawableLeft="@drawable/id"
+            android:drawableStart="@drawable/id"
+            android:drawablePadding="5dp"
+            android:singleLine="true"/>
+        </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="5">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/textInputLayout_nicknameWrapper"
+            app:errorEnabled="false"
+            app:errorTextAppearance="@style/textInputLayoutErrorAppearance">
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:hint="Nick Name"
+                android:id="@+id/textInputEditText_nickname"
+                android:textColorHint="@color/colorPrimaryDark"
+                android:textColor="@color/colorPrimaryDark"
+                android:backgroundTint="@color/colorAccent"
+                android:drawableLeft="@drawable/id"
+                android:drawableStart="@drawable/id"
+                android:drawablePadding="5dp"
+                android:singleLine="true"/>
+        </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_weight="25">
+        <com.wang.avi.AVLoadingIndicatorView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/loading_indicator"
+            app:indicatorColor="@color/colorPrimary"
+            app:indicatorName="BallClipRotatePulseIndicator"
+            style="@style/AVLoadingIndicatorView.Large"
+            android:visibility="gone"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="25"
+        android:gravity="center">
+        <Button
+            android:id="@+id/login_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:shadowColor="@color/colorPrimary"
+            android:textAllCaps="false"
+            android:text="Login"
+            android:textColor="@android:color/black"
+            android:background="@drawable/button_background"/>
+
+    </LinearLayout>
+
+</LinearLayout>

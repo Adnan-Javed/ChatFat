@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:htext="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Launcher"
+
+    android:background="@color/colorPrimary">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="150dp"
+        android:id="@+id/layoutlogo">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:id="@+id/logo"
+            android:src="@mipmap/ic_dove_filled"
+            android:background="@drawable/circle_logo"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:layout_below="@id/layoutlogo"
+        android:layout_marginTop="30dp"
+        android:id="@+id/layouttext"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <com.hanks.htextview.HTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/chatfat"
+            android:layout_below="@+id/logo"
+            android:text="Welcome"
+            android:textColor="@android:color/black"
+            app:animateType="line"
+
+            android:gravity="center"
+            android:fontFamily="cursive"
+            android:textStyle="bold"
+            android:textSize="30sp"/>
+
+    </LinearLayout>
+
+    <!--TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ChatFat"
+        android:paddingTop="10dp"
+        android:fontFamily="cursive"
+        android:textStyle="bold"
+        android:textSize="30sp"/-->
+
+</RelativeLayout>

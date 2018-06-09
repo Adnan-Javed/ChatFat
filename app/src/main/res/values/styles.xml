@@ -1,0 +1,27 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="Divider" >
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.75dp</item>
+        <item name="android:background">#8b8b83</item>
+    </style>
+
+    <style name="Toolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:textColorPrimary">@android:color/black</item> <!-- Back arrow, Title & Menu color -->
+        <!--item name="android:actionMenuTextColor">@android:color/white</item-->
+    </style>
+
+    <style name="textInputLayoutErrorAppearance" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+</resources>

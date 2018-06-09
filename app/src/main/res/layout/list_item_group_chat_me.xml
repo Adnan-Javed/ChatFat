@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="right|end"
+    android:padding="16dp">
+
+    <View android:id="@+id/View_group_chat_padding_me"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_alignParentTop="true"/>
+
+    <TextView android:id="@+id/textView_date_group_chat_me"
+        android:layout_below="@+id/View_group_chat_padding_me"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:text="May 12"
+        android:textColor="@android:color/white"
+        android:background="@drawable/date_backgroud"/>
+
+    <ImageView
+        android:id="@+id/imageView_group_chat_me"
+        android:src="@drawable/profile_user"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/textView_date_group_chat_me"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/textView_Nickname_group_chat_me"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nick Name"
+        android:textStyle="bold"
+        android:fontFamily="cursive"
+        android:textSize="20sp"
+        android:layout_gravity="center"
+        android:layout_marginRight="8dp"
+        android:layout_toLeftOf="@id/imageView_group_chat_me"
+        android:layout_below="@id/textView_date_group_chat_me"
+        android:layout_marginTop="5dp"/>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardView_group_chat_me"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@id/imageView_group_chat_me"
+        android:layout_below="@id/textView_Nickname_group_chat_me"
+        android:layout_alignWithParentIfMissing="true"
+        app:cardBackgroundColor="@color/colorPrimaryDark"
+        app:cardUseCompatPadding="true"
+        app:cardCornerRadius="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_alignParentRight="true"
+        app:cardElevation="4dp"
+        app:cardPreventCornerOverlap="false">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView_message_group_chat_me"
+                android:layout_width="wrap_content"
+                android:gravity="right"
+                android:layout_height="match_parent"
+                android:text="Group Chat message"
+                android:textColor="@android:color/white"
+                android:padding="10dp"
+                android:maxWidth="200dp"/>
+            <TextView
+                android:id="@+id/textView_editedMessage_group_chat_me"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(Edited)"
+                android:textColor="@android:color/white"
+                android:padding="5dp"
+                android:layout_gravity="right"
+                android:visibility="visible"/>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <TextView
+        android:id="@+id/textView_messageDate_group_chat_me"
+        android:text="12:00"
+        android:textSize="12sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/cardView_group_chat_me"
+        android:layout_alignBottom="@id/cardView_group_chat_me"
+        android:layout_marginBottom="6dp" />
+
+</RelativeLayout>
