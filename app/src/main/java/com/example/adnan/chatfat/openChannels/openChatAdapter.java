@@ -64,6 +64,8 @@ public class openChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             case VIEW_TYPE_USER_MESSAGE_Other:
                 ((messageHolder_Other)holder).Bind(mContext, (UserMessage) message);
                 break;
+             default:
+                 break;
         }
     }
 
@@ -76,10 +78,12 @@ public class openChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public int getItemViewType(int position) {
 
         if (messageList.get(position) instanceof UserMessage){
-            if (((UserMessage) messageList.get(position)).getSender().getNickname().equals(preferenceUtils.getNickName()))
+            if (((UserMessage) messageList.get(position)).getSender().getNickname().equals(preferenceUtils.getNickName())){
                 return VIEW_TYPE_USER_MESSAGE_ME;
-            else
+            }
+            else{
                 return VIEW_TYPE_USER_MESSAGE_Other;
+            }
         }
 
         return super.getItemViewType(position);

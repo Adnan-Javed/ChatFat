@@ -146,11 +146,11 @@ public class Login extends AppCompatActivity {
                             Toast.makeText(Login.this, e.getCode()+": "+e.getMessage(), Toast.LENGTH_SHORT).show();
                             return;
                         }
-
-                        startActivity(new Intent(Login.this, MainActivity.class));
-                        finish();
                     }
                 });
+
+                startActivity(new Intent(Login.this, MainActivity.class));
+                finish();
             }
         });
 

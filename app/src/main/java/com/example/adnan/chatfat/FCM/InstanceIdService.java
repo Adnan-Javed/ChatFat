@@ -22,7 +22,7 @@ public class InstanceIdService extends FirebaseInstanceIdService {
             @Override
             public void onRegistered(SendBird.PushTokenRegistrationStatus pushTokenRegistrationStatus, SendBirdException e) {
                 if (e != null){
-                    Toast.makeText(InstanceIdService.this, "unable to register token "+e.getCode()+": "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(InstanceIdService.this, e.getCode()+": "+e.getMessage(), Toast.LENGTH_SHORT).show();
                     return;
                 }
 

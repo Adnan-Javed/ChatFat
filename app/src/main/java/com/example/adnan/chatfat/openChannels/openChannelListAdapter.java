@@ -80,19 +80,21 @@ public class openChannelListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             participants = itemView.findViewById(R.id.participants);
         }
 
-        private void Bind(final Context context, final OpenChannel channel, final OnItemClickListener clickListener){
+        private void Bind(final Context context, final OpenChannel openChannel, final OnItemClickListener clickListener){
 
-            channelName.setText(channel.getName());
-            participants.setText(channel.getParticipantCount()+"");
+            channelName.setText(openChannel.getName());
+            participants.setText(openChannel.getParticipantCount()+"");
 
-            PreviousMessageListQuery listQuery = channel.createPreviousMessageListQuery();
+
+
+            /*PreviousMessageListQuery listQuery = openChannel.createPreviousMessageListQuery();
             listQuery.load(1, true, new PreviousMessageListQuery.MessageListQueryResult() {
                 @Override
                 public void onResult(List<BaseMessage> list, SendBirdException e) {
                     if (e!=null)
                         return;
 
-                    /*if (list.get(15) instanceof UserMessage)
+                    if (list.get(15) instanceof UserMessage)
                         recentMessage.setText(((UserMessage) list.get(15)).getMessage());
                     else if (list.get(15) instanceof AdminMessage)
                         recentMessage.setText(((AdminMessage) list.get(15)).getMessage());
@@ -101,16 +103,16 @@ public class openChannelListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                                 ((FileMessage) list.get(15)).getSender().getNickname());
 
                                 recentMessage.setText(lastMessage);
-                    }*/
+                    }
 
                 }
-            });
+            });*/
 
             if (clickListener != null){
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        clickListener.onItemClick(channel);
+                        clickListener.onItemClick(openChannel);
                     }
                 });
             }

@@ -60,6 +60,11 @@ public class DateUtils {
         return dateFormat.format(timeInMillis);
     }
 
+    public static String formateDate_DMY(long timeInMillis){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy", Locale.getDefault());
+        return dateFormat.format(timeInMillis);
+    }
+
     /**
      * Returns whether the given date is today, based on the user's current locale.
      */

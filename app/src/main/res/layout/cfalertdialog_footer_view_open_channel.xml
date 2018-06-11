@@ -21,16 +21,8 @@
             android:id="@+id/textInputEditText_channelName"
             android:textColorHint="@color/colorPrimaryDark"
             android:textColor="@color/colorPrimaryDark"
-            android:backgroundTint="@color/colorAccent"
+            app:backgroundTint="@color/colorAccent"
             android:singleLine="true"/>
     </android.support.design.widget.TextInputLayout>
-
-    <CheckBox
-        android:id="@+id/checkbox_channelDistinct"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Make Channel Distinct"
-        android:layout_marginVertical="15dp"
-        android:checked="true"/>
 
 </LinearLayout>

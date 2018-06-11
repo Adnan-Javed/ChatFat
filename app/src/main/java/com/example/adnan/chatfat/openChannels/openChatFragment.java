@@ -54,6 +54,7 @@ public class openChatFragment extends Fragment {
 
     private OpenChannel mOpenChannel;
     private String mChannelUrl;
+    private List<BaseMessage> mList;
     private PreviousMessageListQuery messageListQuery;
 
 
@@ -211,6 +212,8 @@ public class openChatFragment extends Fragment {
     private void setUpRecyclerViewAndAdapter(){
 
         mLayoutManager = new LinearLayoutManager(getContext());
+        //mLayoutManager.scrollToPosition(mList.size()-1);
+        mLayoutManager.setReverseLayout(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mChatAdapter);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), 0));
@@ -248,8 +251,8 @@ public class openChatFragment extends Fragment {
                         }
                         mOpenChannel = openChannel;
 
-                        if (getActivity() != null)
-                            ((MainActivity)getActivity()).setActionBarTitle(mOpenChannel.getName());
+                        /*if (getActivity() != null)
+                            ((MainActivity)getActivity()).setActionBarTitle(mOpenChannel.getName());*/
 
                         loadInitialMessageList(MESSAGE_LIST_LIMIT);
                     }
@@ -272,6 +275,8 @@ public class openChatFragment extends Fragment {
                 }
 
                 mChatAdapter.setMessageList(list);
+                //mList = list;
+                //mLayoutManager.scrollToPosition(mList.size()-1);
             }
         });
     }
@@ -296,6 +301,9 @@ public class openChatFragment extends Fragment {
 
                 for (BaseMessage message: list)
                     mChatAdapter.addMessage(message);
+
+                //mList = list;
+                ///mLayoutManager.scrollToPosition(mList.size()-1);
             }
         });
     }
@@ -317,7 +325,9 @@ public class openChatFragment extends Fragment {
                     return;
                 }
 
-                mChatAdapter.addMessage(userMessage);
+                mChatAdapter.addFirstMessage(userMessage);
+                //mLayoutManager.scrollToPosition(mList.size()-1);
+
             }
         });
     }
