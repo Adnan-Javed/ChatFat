@@ -36,5 +36,13 @@
         app:backgroundTint="@color/colorPrimaryDark"
         app:useCompatPadding="true"
         android:src="@drawable/ic_add_white_24dp"/>
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/loading_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:indicatorName="BallClipRotateIndicator"
+        app:indicatorColor="@color/colorPrimary"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

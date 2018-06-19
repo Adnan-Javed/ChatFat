@@ -19,6 +19,16 @@ public class groupChatFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public static groupChatFragment newInstance(String channelUrl){
+
+        groupChatFragment fragment = new groupChatFragment();
+
+        Bundle arg = new Bundle();
+        arg.putString(groupChannelListFragment.EXTRA_GROUP_CHANNEL_URL, channelUrl);
+
+        fragment.setArguments(arg);
+        return fragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

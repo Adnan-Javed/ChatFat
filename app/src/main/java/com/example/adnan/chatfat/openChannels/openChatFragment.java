@@ -155,8 +155,10 @@ public class openChatFragment extends Fragment {
             }
         });
 
-        if (SendBird.getConnectionState() == SendBird.ConnectionState.CLOSED ||
-                SendBird.getConnectionState() == SendBird.ConnectionState.OPEN  ){
+        if (SendBird.getConnectionState() == SendBird.ConnectionState.OPEN )
+            EnterChannel(mChannelUrl);
+
+        if (SendBird.getConnectionState() == SendBird.ConnectionState.CLOSED ){
 
             SendBird.connect(preferenceUtils.getUserId(), new SendBird.ConnectHandler() {
                 @Override
@@ -264,21 +266,24 @@ public class openChatFragment extends Fragment {
     private void loadInitialMessageList(int numberOfMessages){
 
         messageListQuery = mOpenChannel.createPreviousMessageListQuery();
-        messageListQuery.load(numberOfMessages, true, new PreviousMessageListQuery.MessageListQueryResult() {
-            @Override
-            public void onResult(List<BaseMessage> list, SendBirdException e) {
-                if (e != null)
-                {
-                    Toast.makeText(getContext(), "Error Loading Messages: "+e.getCode()+" "
-                            +e.getMessage(), Toast.LENGTH_SHORT).show();
-                    return;
-                }
 
-                mChatAdapter.setMessageList(list);
-                //mList = list;
-                //mLayoutManager.scrollToPosition(mList.size()-1);
-            }
-        });
+        if (messageListQuery.hasMore()){
+            messageListQuery.load(numberOfMessages, true, new PreviousMessageListQuery.MessageListQueryResult() {
+                @Override
+                public void onResult(List<BaseMessage> list, SendBirdException e) {
+                    if (e != null)
+                    {
+                        Toast.makeText(getContext(), "Error Loading Messages: "+e.getCode()+" "
+                                +e.getMessage(), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    mChatAdapter.setMessageList(list);
+                    //mList = list;
+                    //mLayoutManager.scrollToPosition(mList.size()-1);
+                }
+            });
+        }
     }
 
     private void loadMoreMessageList(int numberOfMessages) throws NullPointerException{

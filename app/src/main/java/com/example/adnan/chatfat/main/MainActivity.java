@@ -9,11 +9,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.example.adnan.chatfat.R;
+import com.example.adnan.chatfat.groupChannels.CreateGroupChannelActivity;
 import com.example.adnan.chatfat.openChannels.openChannelListFragment;
 import com.github.florent37.awesomebar.AwesomeBar;
+import com.sendbird.android.SendBird;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mDrawer = findViewById(R.id.drawer);
+        navView = findViewById(R.id.navView);
+
         awesomeBar = findViewById(R.id.awesomebar);
         awesomeBar.displayHomeAsUpEnabled(false);
 
@@ -82,4 +87,11 @@ public class MainActivity extends AppCompatActivity {
             getSupportActionBar().setTitle(title);
         }
     }
+
+    /*@Override
+    protected void onDestroy() {
+        SendBird.removeConnectionHandler("CONNECTION_HANDLER_GROUP_CHANNEL_LIST");
+        super.onDestroy();
+
+    }*/
 }

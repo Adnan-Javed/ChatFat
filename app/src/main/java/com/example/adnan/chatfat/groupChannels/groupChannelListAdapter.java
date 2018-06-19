@@ -56,6 +56,7 @@ public class groupChannelListAdapter extends RecyclerView.Adapter<RecyclerView.V
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
+        ((ChannelHolder) holder).Bind(mContext, groupChannels.get(position), mItemClickListener, mOnItemLongClickListener);
     }
 
     @Override
@@ -63,10 +64,20 @@ public class groupChannelListAdapter extends RecyclerView.Adapter<RecyclerView.V
         return groupChannels.size();
     }
 
+    public void setGroupChannels(List<GroupChannel> channels){
+        groupChannels = channels;
+        notifyDataSetChanged();
+    }
+
+    public void addGroupChannel(GroupChannel channel){
+        groupChannels.add(channel);
+        notifyDataSetChanged();
+    }
+
     private class ChannelHolder extends RecyclerView.ViewHolder{
 
         ImageView groupImage;
-        TextView channelName, date, recentMesssage, participants, unreadCount;
+        TextView channelName, date, recentMessage, participants, unreadCount;
         AVLoadingIndicatorView typingStatus;
 
         public ChannelHolder(View itemView) {
@@ -75,7 +86,7 @@ public class groupChannelListAdapter extends RecyclerView.Adapter<RecyclerView.V
             groupImage = itemView.findViewById(R.id.imageView_groupChannelItem);
             channelName = itemView.findViewById(R.id.topic_groupChannel);
             date = itemView.findViewById(R.id.Date);
-            recentMesssage = itemView.findViewById(R.id.recent_message_group_channel);
+            recentMessage = itemView.findViewById(R.id.recent_message_group_channel);
             participants = itemView.findViewById(R.id.participants);
             unreadCount = itemView.findViewById(R.id.unreadCount);
             typingStatus = itemView.findViewById(R.id.typingIndicator);
@@ -88,15 +99,15 @@ public class groupChannelListAdapter extends RecyclerView.Adapter<RecyclerView.V
             participants.setText( String.valueOf(groupChannel.getMemberCount()) );
 
             date.setVisibility(View.INVISIBLE);
-            recentMesssage.setVisibility(View.INVISIBLE);
+            recentMessage.setVisibility(View.INVISIBLE);
 
             if (groupChannel.getLastMessage() != null){
 
                 date.setVisibility(View.VISIBLE);
                 date.setText(DateUtils.formateDate_DMY(groupChannel.getCreatedAt()));
 
-                recentMesssage.setVisibility(View.VISIBLE);
-                recentMesssage.setText(groupChannel.getLastMessage()+"");
+                recentMessage.setVisibility(View.VISIBLE);
+                recentMessage.setText(groupChannel.getLastMessage()+"");
             }
 
             if (groupChannel.getUnreadMessageCount() == 0){
@@ -109,8 +120,8 @@ public class groupChannelListAdapter extends RecyclerView.Adapter<RecyclerView.V
 
             if (groupChannel.isTyping()){
                 typingStatus.setVisibility(View.VISIBLE);
-                recentMesssage.setVisibility(View.VISIBLE);
-                recentMesssage.setText("Someone is typing...");
+                recentMessage.setVisibility(View.VISIBLE);
+                recentMessage.setText("Someone is typing...");
                 typingStatus.show();
             }
             else{
@@ -118,11 +129,11 @@ public class groupChannelListAdapter extends RecyclerView.Adapter<RecyclerView.V
                 typingStatus.hide();
 
                 if (groupChannel.getLastMessage() != null){
-                    recentMesssage.setVisibility(View.VISIBLE);
-                    recentMesssage.setText( ((UserMessage) groupChannel.getLastMessage()).getMessage() );
+                    recentMessage.setVisibility(View.VISIBLE);
+                    recentMessage.setText( ((UserMessage) groupChannel.getLastMessage()).getMessage() );
                 }
                 else
-                    recentMesssage.setVisibility(View.INVISIBLE);
+                    recentMessage.setVisibility(View.INVISIBLE);
             }
 
             if (itemClickListener != null){

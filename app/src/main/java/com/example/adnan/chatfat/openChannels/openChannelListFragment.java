@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +29,7 @@ import com.sendbird.android.OpenChannelListQuery;
 import com.sendbird.android.SendBird;
 import com.sendbird.android.SendBirdException;
 import com.sendbird.android.User;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.List;
 
@@ -38,6 +41,7 @@ public class openChannelListFragment extends Fragment {
     public static final String EXTRA_OPEN_CHANNEL_URL = "OPEN_CHANNEL_URL";
     private static final int CHANNEL_LIST_LIMIT = 15;
     private static final String CONNECTION_HANDLER_ID = "CONNECTION_HANDLER_OPEN_CHANNEL_LIST";
+    private static final String CHANNEL_HANDLER_ID = "CHANNEL_HANDLER_OPEN_CHANNEL_LIST";
 
     private RecyclerView mRecyclerView;
     private openChannelListAdapter channelListAdapter;
@@ -45,8 +49,13 @@ public class openChannelListFragment extends Fragment {
     private SwipeRefreshLayout refreshLayout;
     private FloatingActionButton actionButton;
     private OpenChannelListQuery mChannelListQuery;
+    private AVLoadingIndicatorView channelLoadingIndicator;
+    CFAlertDialog.Builder dialog;
+    View rootView;
 
     private TextInputEditText editText_ChannelName;
+
+    View CFAlertDialogue_footerView;
 
     public openChannelListFragment() {
         // Required empty public constructor
@@ -60,13 +69,15 @@ public class openChannelListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         // Inflate the layout for this fragment
-        View rootView =  inflater.inflate(R.layout.fragment_open_channel_list, container, false);
+        rootView =  inflater.inflate(R.layout.fragment_open_channel_list, null);
 
-        final View CFAlertDialogue_footerView = inflater.inflate(R.layout.cfalertdialog_footer_view_open_channel, null);
+        CFAlertDialogue_footerView = inflater.inflate(R.layout.cfalertdialog_footer_view_open_channel, null);
         editText_ChannelName = CFAlertDialogue_footerView.findViewById(R.id.textInputEditText_channelName);
 
         setRetainInstance(true);
+        channelLoadingIndicator = rootView.findViewById(R.id.loading_indicator);
 
         mRecyclerView = rootView.findViewById(R.id.recyclerView_openChannelList);
         channelListAdapter = new openChannelListAdapter(getContext());
@@ -84,22 +95,27 @@ public class openChannelListFragment extends Fragment {
         actionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CFAlertDialog.Builder dialog = new CFAlertDialog.Builder(getContext())
-                        .setDialogStyle(CFAlertDialog.CFAlertStyle.ALERT)
-                        .setTitle("Create Open Channel")
-                        .setTextGravity(Gravity.CENTER_HORIZONTAL)
-                        .setCornerRadius(5)
-                        .setCancelable(true)
-                        .setFooterView(CFAlertDialogue_footerView)
-                        .addButton("Cancel", Color.parseColor("#000000"), Color.parseColor("#f8f8ff"),
+
+                ViewGroup parent = (ViewGroup) CFAlertDialogue_footerView.getParent();
+                if (parent != null)
+                    parent.removeView(CFAlertDialogue_footerView);
+
+                dialog = new CFAlertDialog.Builder(getActivity());
+                dialog.setDialogStyle(CFAlertDialog.CFAlertStyle.ALERT);
+                dialog.setTitle("Create Open Channel");
+                dialog.setTextGravity(Gravity.CENTER_HORIZONTAL);
+                dialog.setCornerRadius(5);
+                dialog.setCancelable(true);
+                dialog.setFooterView(CFAlertDialogue_footerView);
+                dialog.addButton("Cancel", Color.parseColor("#000000"), Color.parseColor("#f8f8ff"),
                                 CFAlertDialog.CFAlertActionStyle.NEGATIVE, CFAlertDialog.CFAlertActionAlignment.JUSTIFIED,
                                 new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         dialog.dismiss();
                                     }
-                                })
-                        .addButton("Create", Color.parseColor("#000000"), Color.parseColor("#8b3a3a"),
+                                });
+                dialog.addButton("Create", Color.parseColor("#000000"), Color.parseColor("#8b3a3a"),
                                 CFAlertDialog.CFAlertActionStyle.POSITIVE, CFAlertDialog.CFAlertActionAlignment.JUSTIFIED,
                                 new DialogInterface.OnClickListener() {
                                     @Override
@@ -116,8 +132,9 @@ public class openChannelListFragment extends Fragment {
                                                             return;
                                                         }
 
-                                                        dialog.dismiss();
                                                         refreshChannelList(CHANNEL_LIST_LIMIT);
+                                                        dialog.dismiss();
+                                                        editText_ChannelName.setText("");
                                                     }
                                                 });
                                     }
@@ -127,12 +144,6 @@ public class openChannelListFragment extends Fragment {
         });
 
         setUpRecyclerViewAndAdapter();
-        if (rootView != null)
-        {
-            ViewGroup parent = (ViewGroup) container.getParent();
-            if (parent != null)
-                parent.removeView(rootView);
-        }
 
         return rootView;
     }
@@ -160,6 +171,9 @@ public class openChannelListFragment extends Fragment {
             }
         });
 
+        if (SendBird.getConnectionState() == SendBird.getConnectionState().OPEN)
+            refreshChannelList(CHANNEL_LIST_LIMIT);
+
         if (SendBird.getConnectionState() == SendBird.ConnectionState.CLOSED){
 
             SendBird.connect(preferenceUtils.getUserId(), new SendBird.ConnectHandler() {
@@ -181,6 +195,7 @@ public class openChannelListFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
+
         SendBird.removeConnectionHandler(CONNECTION_HANDLER_ID);
     }
 
@@ -219,9 +234,10 @@ public class openChannelListFragment extends Fragment {
                 @Override
                 public void onResult(List<OpenChannel> list, SendBirdException e) {
                     if (e != null){
-                        Toast.makeText(getContext(), "Channels Load Failure: "+e.getCode()+" "+e.getMessage(),
+                        /*Toast.makeText(getContext(), "Channels Load Failure: "+e.getCode()+" "+e.getMessage(),
                                 Toast.LENGTH_SHORT)
-                                .show();
+                                .show();*/
+                        channelLoadingIndicator.show();
                         return;
                     }
 
@@ -229,8 +245,8 @@ public class openChannelListFragment extends Fragment {
                         channelListAdapter.addChannel(channel);
                 }
             });
+            channelLoadingIndicator.hide();
         }
-
     }
 
     private void refreshChannelList(int numberOfChannels){
@@ -241,9 +257,9 @@ public class openChannelListFragment extends Fragment {
             @Override
             public void onResult(List<OpenChannel> list, SendBirdException e) {
                 if (e != null){
-                    Toast.makeText(getContext(), "Channels Load Failure: "+e.getCode()+" "+e.getMessage(),
+                    /*Toast.makeText(getContext(), "Channels Load Failure: "+e.getCode()+" "+e.getMessage(),
                             Toast.LENGTH_SHORT)
-                            .show();
+                            .show();*/
                     return;
                 }
                 channelListAdapter.setOpenChannelList(list);

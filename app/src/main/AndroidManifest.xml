@@ -27,6 +27,7 @@
         </activity>
         <activity android:name=".main.Login" />
         <activity android:name=".main.MainActivity"></activity>
+        <activity android:name=".groupChannels.CreateGroupChannelActivity" />
 
         <service android:name=".FCM.InstanceIdService">
             <intent-filter>

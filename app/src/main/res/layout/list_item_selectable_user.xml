@@ -1,33 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:orientation="horizontal"
     android:layout_margin="5dp"
-    android:gravity="left"
     android:background="?attr/selectableItemBackground">
 
     <ImageView
         android:id="@+id/imageView_selectableImage_group_chat"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_weight="1"
         android:src="@drawable/profile_image"/>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/textView_SelectableUserName"
+        android:layout_width="230dp"
         android:layout_height="match_parent"
         android:text="User Nick Name"
-        android:layout_weight="8"
         android:gravity="bottom"
+        android:layout_toRightOf="@+id/imageView_selectableImage_group_chat"
         android:textStyle="bold"
-        android:textSize="16sp"/>
+        android:textSize="20sp"/>
 
     <android.support.v7.widget.AppCompatCheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/checkbox_selectUser"
         android:layout_gravity="bottom"
-        android:layout_weight="0"
-        android:layout_marginRight="5dp"/>
+        android:layout_marginRight="5dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/textView_SelectableUserName"/>
+    <View
+        style="@style/Divider"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="100dp"/>
 
-</LinearLayout>
+</RelativeLayout>
